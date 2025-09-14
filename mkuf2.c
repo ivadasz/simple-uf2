@@ -73,6 +73,8 @@ main(int argc, char *argv[])
 		magicStart0: UF2_MAGIC_START0,
 		magicStart1: UF2_MAGIC_START1,
 		flags: UF2_FLAG_FAMILY_ID,
+		// At least RP2350B expects payloadSize to always be 256.
+		payloadSize: 256,
 		blockNo: 0,
 		magicEnd: UF2_MAGIC_END,
 	};
@@ -209,7 +211,6 @@ found:
 		if (remaining < amount)
 			amount = remaining;
 		uf2data.targetAddr = address + pos;
-		uf2data.payloadSize = amount;
 		nr = pread(infd, &uf2data.data[0], amount, offset + pos);
 		if (nr == -1)
 			err(1, "pread");
